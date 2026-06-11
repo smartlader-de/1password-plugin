@@ -13,6 +13,9 @@ First release as a Claude Code plugin.
   `.claude-plugin/marketplace.json` for git-based installs. Skills are
   auto-discovered from `skills/*/SKILL.md` and namespaced as
   `1password:<skill>`.
+- Cursor plugin packaging: `.cursor-plugin/plugin.json` manifest and
+  `rules/1password-safety.mdc` for Cursor's plugin/rules system. MCP setup is
+  intentionally guided rather than bundled as active config.
 - `1password:setup` — guided onboarding: state detection, CLI vs MCP choice
   with trade-offs, 1Password app settings walkthrough, access verification,
   working-style preferences, CLAUDE.md wiring.

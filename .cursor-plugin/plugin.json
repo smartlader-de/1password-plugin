@@ -1,0 +1,20 @@
+{
+  "name": "1password",
+  "version": "1.0.0",
+  "description": "Agent-safe 1Password workflows: Environments and provider secret sync, vault/item management with cross-vault moves, SSH keys and Git signing, plus a guided setup. Metadata-first - secret values never reach the agent by default.",
+  "author": {
+    "name": "smartlader.de"
+  },
+  "repository": "https://github.com/smartlader-de/1password-plugin",
+  "license": "MIT",
+  "keywords": [
+    "1password",
+    "secrets",
+    "environment-variables",
+    "ssh",
+    "git-signing",
+    "security",
+    "credentials",
+    "mcp"
+  ]
+}
