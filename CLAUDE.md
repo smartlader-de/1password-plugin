@@ -18,6 +18,22 @@ shape. Before pushing anything:
 Internal planning lives in gitignored files (`PRD.md`, `.clavix/`, `docs/`,
 `.remember/`) — never commit it.
 
+## Versioning Workflow
+
+`package.json` is the authoritative version. Plugin manifests and skill
+frontmatter keep static copies for runtime compatibility; run
+`npm run sync:version` only when preparing an actual release/version sync.
+
+Normal PRs should not bump version files. When preparing or reviewing a PR,
+include a line in the PR body:
+
+`Suggested version bump: patch|minor|major|none -> x.y.z`
+
+Use `patch` for fixes or docs/packaging corrections, `minor` for new skill
+capabilities or supported workflows, `major` for breaking skill names,
+removed behavior, or incompatible manifest changes, and `none` for purely
+internal/test-only changes.
+
 ## 1Password Skills
 
 This collection provides five skills for securely managing credentials through 1Password.

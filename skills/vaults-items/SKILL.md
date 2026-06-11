@@ -1,6 +1,6 @@
 ---
 name: vaults-items
-version: 1.0.0
+version: 1.1.0
 description: Use when managing 1Password vaults and items - creating or editing items, moving or copying items between vaults or accounts, sharing items, managing documents, or granting vault permissions to users and groups
 ---
 
