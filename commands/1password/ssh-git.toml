@@ -1,0 +1,6 @@
+description = "Set up 1Password-backed SSH keys, Git signing, provider key registration, and server SSH."
+prompt = """
+Use the bundled 1password SSH/Git skill at skills/ssh-git/SKILL.md.
+
+Follow the repository safety rules: load references/security.md, never print private key material, only report public keys when needed, and ask explicit confirmation before creating 1Password SSH key items, modifying SSH or Git config, or adding keys to provider accounts.
+"""

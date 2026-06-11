@@ -1,0 +1,6 @@
+description = "Manage 1Password Environments, project secrets, provider sync, and runtime injection."
+prompt = """
+Use the bundled 1password environments skill at skills/environments/SKILL.md.
+
+Follow the repository safety rules: load references/security.md, prefer 1Password Environments and MCP metadata workflows when available, never print secret values, and ask explicit confirmation before raw value access, provider writes or overwrites, deletes, rotations, MCP configuration, or production changes.
+"""

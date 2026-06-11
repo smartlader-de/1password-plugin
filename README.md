@@ -138,10 +138,24 @@ git clone https://github.com/smartlader-de/1password-plugin ~/.codex/skills/1pas
 
 Restart Codex; the root `SKILL.md` routes to the nested skills.
 
-### Gemini CLI (manual)
+### Gemini CLI (extension)
 
-Gemini loads skills from `~/.gemini/skills/` (or `.gemini/skills/` per
-project). Paste into your terminal:
+Gemini CLI installs this repository as an extension through
+`gemini-extension.json`. Paste into your terminal:
+
+```bash
+gemini extensions install https://github.com/smartlader-de/1password-plugin
+```
+
+For local development from a checkout:
+
+```bash
+gemini extensions link .
+```
+
+Manual fallback: Gemini also loads skills from `~/.gemini/skills/` (or
+`.gemini/skills/` per project). If you cannot use extensions, clone the skill
+collection directly:
 
 ```bash
 git clone https://github.com/smartlader-de/1password-plugin ~/.gemini/skills/1password
@@ -204,11 +218,13 @@ Metadata-first, deny-by-default:
 └── marketplace.json     # Claude Code marketplace entry for git installs
 .cursor-plugin/
 └── plugin.json          # Cursor plugin manifest
+gemini-extension.json    # Gemini CLI extension manifest
 opencode/index.mjs       # native OpenCode plugin entrypoint
 SKILL.md                 # routing entrypoint (non-plugin runtimes)
 CLAUDE.md / AGENTS.md / GEMINI.md   # runtime entrypoint notes
 agents/openai.yaml       # OpenAI-style agent definition
 CHANGELOG.md
+commands/                # Gemini CLI slash command wrappers
 rules/                   # Cursor .mdc rules
 skills/
 ├── setup/SKILL.md
@@ -233,11 +249,11 @@ npm test
 ```
 
 The suite validates entrypoints, skill/reference path integrity, Claude,
-Cursor, and OpenCode plugin manifests/tool registration, dotenv parsing,
-metadata-only name comparison, account-binding checks, output redaction — and
-a **genericity gate** that fails if setup-specific details (personal paths,
-emails, real account IDs) ever land in shipped files. See `CLAUDE.md` for the
-contributor workflow.
+Cursor, Gemini, and OpenCode plugin manifests/tool registration, dotenv
+parsing, metadata-only name comparison, account-binding checks, output
+redaction — and a **genericity gate** that fails if setup-specific details
+(personal paths, emails, real account IDs) ever land in shipped files. See
+`CLAUDE.md` for the contributor workflow.
 
 ## License
 
