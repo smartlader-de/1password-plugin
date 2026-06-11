@@ -1,11 +1,12 @@
 # Roadmap
 
 Plugin versioning follows SemVer; the authoritative version is
-`.claude-plugin/plugin.json`. Everything below up to and including "Full
-1Password Surface Coverage" shipped in **plugin 1.0.0** (the pre-plugin
-internal milestones V1.1/V1.2 are kept for history). See `CHANGELOG.md`.
+`.claude-plugin/plugin.json`. Everything from "Full 1Password Surface
+Coverage" up to and including the "Frictionless, least-privilege secrets"
+block below shipped in **plugin 1.1.0** (the pre-plugin internal milestones
+V1.1/V1.2 are kept for history). See `CHANGELOG.md`.
 
-## 1.1.0 (planned)
+## 1.1.0 (shipped)
 
 Frictionless, least-privilege secrets:
 

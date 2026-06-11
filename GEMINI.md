@@ -1,6 +1,6 @@
 ## 1Password Skills
 
-Four skills for securely managing credentials through 1Password.
+Five skills for securely managing credentials through 1Password.
 
 This Gemini CLI extension bundles Agent Skills in `skills/*/SKILL.md`. For
 1Password tasks, activate or load the matching bundled skill and follow its
@@ -11,6 +11,7 @@ Available skills:
 - `1password:environments` — secrets, environment variables, provider sync, Environment transfers
 - `1password:vaults-items` — item CRUD, cross-vault/account moves, sharing, vault permissions
 - `1password:ssh-git` — SSH keys, Git signing, server access
+- `1password:cli-auth` — biometric auth for CLI/AI tool API keys (Shell Plugins), AI-access security
 
 For any other 1Password developer topic, load `references/docs-map.md` and
 fetch current docs from www.1password.dev.

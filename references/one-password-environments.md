@@ -31,35 +31,36 @@ op run --help 2>/dev/null | rg -- '--environment' && echo "op run --environment 
 
 If `op environment` is unavailable, prefer MCP setup or the 1Password desktop workflow before any classic vault/item fallback.
 
-## Runtime Injection
+## Local Development (default: mounted `.env`)
 
-Use `op run` when a command needs secrets but the agent does not.
+For interactive local development, prefer a 1Password-mounted `.env`: one
+authorization per unlock session, dotenv/Docker-Compose compatible, nothing
+plaintext on disk. Lower-friction than repeated `op run` in an edit-run loop.
+See `local-env-mount.md` for the mount flow and gotchas (Mac/Linux only;
+git-tracked `.env` removed first; 10-mount limit; no concurrent readers).
+
+## Scripted / CI Runtime Injection (`op run`)
+
+Use `op run` when a command needs secrets but the agent does not, and for
+scripts and CI where no interactive mount exists:
 
 ```bash
 op run --environment ENV_ID -- npm run dev
 ```
 
-Do not verify this with `printenv` in an agent transcript. If a runtime command fails, inspect non-secret errors only.
+One injection covers all variables for the subprocess — prefer it over N
+separate `op read` calls (prompt economy). Do not verify with `printenv` in an
+agent transcript. If a runtime command fails, inspect non-secret errors only.
 
-## Reading Variables
+## Reading Variables (raw access)
 
-`op environment read ENV_ID` can output key-value pairs. Treat it as raw value access:
+`op environment read ENV_ID` can output key-value pairs. Treat it as raw value
+access:
 
 - Require explicit user approval.
 - Do not print the output.
 - Do not pipe it into commands that log, trace, cache, or persist values.
-- Prefer MCP metadata operations for listing Environment names and variable names.
-
-## Local Mounted Dotenv Files
-
-1Password Environments can provide local mounted `.env` files for development tools. These files are intended to avoid persistent plaintext credentials on disk.
-
-Rules:
-
-- Prefer MCP-managed mounted files when dotenv compatibility is required.
-- Add configured mount paths to `.gitignore`.
-- Treat mount paths as runtime compatibility surfaces, not the source of truth.
-- Use the 1Password agent hook validation flow when supported to prevent agents from running before required mounted files are available.
+- Prefer MCP metadata operations for listing Environment and variable names.
 
 ## Import Guidance
 
@@ -82,3 +83,21 @@ Recommended Environment names:
 - `projectname/preview`
 
 Use exact variable-name matching in MVP. Provider-specific renames are deferred.
+
+## Infrastructure Secret Creation
+
+When generating new secrets during infrastructure setup (database passwords,
+API tokens, auth secrets, service join tokens):
+
+1. Create or identify the target Environment via MCP.
+2. Generate each value with a local tool (`openssl rand`, etc.) and pipe
+   directly to MCP `append_variables` with `concealed: true` — never print the
+   value.
+3. Use `op run --environment ENV_ID -- <command>` to inject values into the
+   target system (Docker service, cloud provider, etc.).
+4. Never create the secret in the target system first and copy to 1Password
+   second. If that already happened: generate a new value in 1Password, update
+   the target, discard the original.
+
+See `mcp-quickstart.md` for the `append_variables` call pattern and MCP auth
+flow.

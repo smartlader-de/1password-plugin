@@ -78,6 +78,26 @@ End-user (non-developer) docs remain at `support.1password.com`.
 - `/watchtower.md` — Developer Watchtower (plaintext SSH key alerts)
 - `/web/add-1password-button-website.md`, `/web/compatible-website-design.md`
 
+## Capability Coverage Matrix
+
+Every official capability page this skill targets maps to a workflow or an
+explicit guided pointer:
+
+| Capability page | Covered by |
+|---|---|
+| `/environments/overview.md` | `1password:environments` import; `one-password-environments.md` |
+| `/environments/local-env-file.md` | Project Onboarding; `local-env-mount.md` |
+| `/environments/read-environment-variables.md` | Local Runtime Workflow; `one-password-environments.md` |
+| `/environments/agent-hook-validate.md` | Project Onboarding step 3; `local-env-mount.md` |
+| `/environments/aws-secrets-manager.md` | Guided pointer (`1password:environments` "Beyond This Skill") |
+| `/environments/mcp-codex-server.md` | `mcp-setup.md`, `mcp-quickstart.md` |
+| `/cli/shell-plugins.md` | `1password:cli-auth`; `shell-plugins.md` |
+| `/get-started/secure-ai-access.md` | `1password:cli-auth`; `ai-access.md` |
+| `/agentic-autofill.md` | `ai-access.md` (guided pointer) |
+| `/building-with-llms.md` | `sdks.md`; `ai-access.md` |
+| `/ssh/agent-config.md` (agent.toml) | `ssh-agent.md`; `1password:ssh-git` |
+| `/watchtower.md` | `1password:ssh-git` Hygiene Check |
+
 ## Feature Status Snapshot (June 2026)
 
 | Feature | Status |

@@ -1,6 +1,6 @@
 ---
 name: 1password
-description: Use when routing 1Password credential workflows to environments, vaults-items, or SSH/Git skills, or answering any 1Password developer question
+description: Use when routing 1Password credential workflows to setup, environments, vaults-items, cli-auth, or SSH/Git skills, or answering any 1Password developer question
 ---
 
 # 1password
@@ -23,6 +23,11 @@ Use `skills/ssh-git/SKILL.md` for SSH key generation, provider public-key
 registration, Git commit signing, and SSH server access through the 1Password
 SSH agent.
 
+Use `skills/cli-auth/SKILL.md` for securing the credentials CLI and AI tools
+themselves use — API keys for `claude`, `openai`, `aws`, `gh` via 1Password
+Shell Plugins and biometric auth, plus AI-access security (keys in MCP configs,
+browser-agent autofill).
+
 For any other 1Password developer topic (SDKs, service accounts, Connect,
-CI/CD integrations, Events API, shell plugins, agent security), load
+CI/CD integrations, Events API, agent security), load
 `references/docs-map.md` and fetch current docs from www.1password.dev.

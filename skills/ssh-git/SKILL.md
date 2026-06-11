@@ -1,7 +1,7 @@
 ---
 name: ssh-git
 description: Use when generating SSH keys stored in 1Password, registering keys with GitHub or GitLab, configuring Git commit signing via 1Password, or setting up SSH server access through the 1Password SSH agent
-version: 1.0.0
+version: 1.1.0
 ---
 
 # 1password:ssh-git
@@ -47,6 +47,12 @@ ssh-add -l
 If the command reports no identities, confirm whether the expected key exists in
 1Password and is allowed for the SSH agent. If the command reports no agent or
 cannot connect to the agent, stop and guide setup before any key operation.
+
+If a key you expect is missing from `ssh-add -l`, check eligibility before
+anything else: the item must be the SSH Key type (Ed25519/RSA), in a vault the
+agent offers, and active (not archived). For shared/custom vaults the agent
+must be scoped to include them. See `../../references/ssh-agent.md`
+(eligibility rules and `agent.toml` scoping).
 
 Enable the agent in the 1Password app:
 
@@ -135,6 +141,12 @@ Safety rules:
 - Public keys may be shared and displayed.
 
 ## Workflow 2: Provider Registration
+
+Preferred manual path: use the 1Password browser extension to autofill the
+public key into the provider's "add SSH key" form (GitHub, GitLab, Bitbucket,
+Azure DevOps, AWS CodeCommit) — no key material is copied by hand. The CLI
+paths below (`gh`/`glab`) remain available for scripted registration. See
+`../../references/ssh-agent.md` (public-key autofill).
 
 Get the public key from the 1Password SSH agent:
 
@@ -274,6 +286,12 @@ ls -la ~/.1password/agent.sock
 
 Load `../../references/ssh-agent.md` for Linux/WSL socket paths and multi-agent
 patterns before writing SSH configuration.
+
+If a server rejects auth with "too many authentication failures", the agent is
+offering more than the ~6 keys the server allows. Scope offered keys with
+`~/.config/1Password/ssh/agent.toml`, or pin the host to one key with
+`IdentitiesOnly yes`. See `../../references/ssh-agent.md` (six-key limit,
+agent.toml, bookmarks).
 
 Ask before writing `~/.ssh/config`.
 

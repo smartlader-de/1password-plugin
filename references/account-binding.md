@@ -33,6 +33,27 @@ file. If it is not ignored, add the ignore rule first and verify it with:
 git check-ignore .1password/environments.json
 ```
 
+## Two Files In `.1password/`
+
+This directory can hold two unrelated files. Keep them strictly separate.
+
+| File | Owner | Holds |
+|---|---|---|
+| `environments.json` | this skill (account binding) | account/Environment IDs, context labels, timestamps |
+| `environments.toml` | official 1Password agent hook | `mount_paths` for hook validation |
+
+Hard rules:
+
+- Never write `mount_paths` into `environments.json`.
+- Never write account-binding metadata into `environments.toml`.
+- The agent-hook TOML is authored by the onboarding flow
+  (`local-env-mount.md`), not by the binding guard.
+
+(The two basenames differ only by extension and do not collide on disk. A
+rename to `skill-binding.json` was considered and rejected: it would break
+existing project bindings and the `check-account-binding.js` default path for
+no functional gain.)
+
 ## Suggested Shape
 
 ```json

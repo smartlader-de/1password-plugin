@@ -22,7 +22,7 @@ process-to-process (1Password → your app), never through the chat.
 
 ## What's Inside
 
-Four skills, routed automatically by what you ask:
+Five skills, routed automatically by what you ask:
 
 | Skill | Use for |
 |---|---|
@@ -30,6 +30,7 @@ Four skills, routed automatically by what you ask:
 | `1password:environments` | `.env` import, provider secret audit/sync, local runtime injection (`op run`), 1Password MCP, infrastructure secret creation, moving Environments/variables between Environments and accounts |
 | `1password:vaults-items` | Item create/edit/archive/delete, moving/copying items between vaults and accounts, time-limited share links, Document items, vault permissions |
 | `1password:ssh-git` | SSH key generation into 1Password, GitHub/GitLab key registration, Git commit signing, server SSH via the 1Password SSH agent |
+| `1password:cli-auth` | Biometric auth for CLI/AI tool API keys (claude, openai, aws, gh) via 1Password Shell Plugins; AI-access security (MCP-config keys, browser-agent autofill) |
 
 Plus expert references the skills load on demand: a live documentation map for
 www.1password.dev, `op` CLI item/vault reference, secret references
@@ -230,7 +231,8 @@ skills/
 ├── setup/SKILL.md
 ├── environments/SKILL.md
 ├── vaults-items/SKILL.md
-└── ssh-git/SKILL.md
+├── ssh-git/SKILL.md
+└── cli-auth/SKILL.md
 references/              # on-demand expert references (docs map, CLI, SDKs, ...)
 scripts/                 # metadata-safe helpers (dotenv name parsing, diffing, redaction)
 tests/
@@ -239,7 +241,7 @@ tests/
 ## Versioning
 
 SemVer. The authoritative version is `.claude-plugin/plugin.json` and must
-match `package.json` (enforced by tests). Current version: **1.0.0** — see
+match `package.json` (enforced by tests). Current version: **1.1.0** — see
 `CHANGELOG.md` and the [releases](https://github.com/smartlader-de/1password-plugin/releases).
 
 ## Development

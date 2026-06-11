@@ -22,7 +22,7 @@ if (!mp.plugins.some(p => p.name === '1password')) throw new Error('marketplace.
 "
 
 # Plugin skills must use bare kebab-case names; the plugin supplies the 1password: namespace.
-for skill in environments vaults-items ssh-git setup; do
+for skill in environments vaults-items ssh-git setup cli-auth; do
   name=$(grep -m1 '^name:' "$package_root/skills/$skill/SKILL.md" | sed 's/name: *//')
   [ "$name" = "$skill" ] || { echo "FAIL: skills/$skill frontmatter name is '$name', expected '$skill'"; exit 1; }
 done

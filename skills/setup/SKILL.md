@@ -1,6 +1,6 @@
 ---
 name: setup
-version: 1.0.0
+version: 1.1.0
 description: Use when installing, configuring, or onboarding the 1password skill collection - choosing between CLI and MCP access, enabling the right 1Password app settings, verifying access, and wiring instructions into CLAUDE.md
 ---
 
@@ -68,9 +68,36 @@ guarded fallback gates.
 
 Separate offer while the CLI is being set up: if the user keeps API keys for
 CLI tools (`claude`, `openai`, `aws`, `gh`) in shell profiles or plaintext
-configs, 1Password Shell Plugins can replace those with biometric auth — load
-`../../references/shell-plugins.md`. This is about the tools' own
-credentials, independent of the project-secrets choice above.
+configs, those belong in `1password:cli-auth` (Shell Plugins, biometric auth)
+— a different concern from the project-secrets choice above. If the user also
+works with AI tools, `1password:cli-auth` covers the wider Secure AI Access
+surface too: keys embedded in MCP config files and browser-agent credential
+handoff (Secure Agentic Autofill).
+
+### Step 2.5: Choose Secret-Loading Mode
+
+Distinct from the CLI/MCP *transport* choice above: how should this project's
+secrets be loaded at runtime? Present the official trichotomy with honest
+trade-offs and record the answer per project.
+
+1. **1Password Environments (beta)** — variables grouped per project/context
+   (staging, production), shareable with a team, switchable without editing
+   files. Best default for multi-context projects and teams. Mac/Linux for
+   mounted `.env`; needs Developer mode and the beta CLI/MCP.
+2. **Secret references** — `op://vault/item/field` URIs committed in `.env`
+   files, resolved by `op run` at runtime. More manual to set up and to switch
+   contexts, but GA (not beta), works on Windows, keeps everything in classic
+   vaults. Load `../../references/secret-references.md`.
+3. **Hybrid** — `op run --environment` loading an Environment *alongside*
+   secret references from `.env` files or exported variables. For projects
+   mid-migration or mixing team Environments with personal references.
+
+On Windows, mounted `.env` and the MCP server are unavailable — recommend
+**secret references** and say why.
+
+Record the chosen mode; it is persisted in the CLAUDE.md snippet (Step 7) so
+future sessions honor it without re-asking. If a 1Password section already
+exists with a recorded mode, surface it and respect it instead of re-asking.
 
 ### Step 3: 1Password App Settings
 
@@ -137,7 +164,7 @@ Detect where the skill collection is installed (e.g. `~/.claude/skills/`,
   wouldn't hurt: the safety rules then protect every project, not just this
   one. If they decline, drop it.
 
-Show the snippet before writing and adapt it to their step 6 answers:
+Show the snippet before writing and adapt it to their step 2.5 and step 6 answers:
 
 ```markdown
 ## 1Password Skills
@@ -148,7 +175,14 @@ before taking action.
 
 For vault items — creating, editing, moving between vaults or accounts,
 sharing — use `1password:vaults-items`. For SSH keys, Git signing, or SSH
-server access, use `1password:ssh-git`.
+server access, use `1password:ssh-git`. For securing the API keys of CLI/AI
+tools themselves (claude, openai, aws, gh) via Shell Plugins, use
+`1password:cli-auth`.
+
+**This project's settings (recorded at setup):**
+- Secret-loading mode: <environments | secret-references | hybrid>
+- Strictness: <metadata-only | guarded-raw-with-approval>
+- Default 1Password account: <account label or "single account">
 
 Default to metadata-only workflows: variable names, contexts, and status.
 Do not print, log, persist, or diff raw secret values unless explicitly
@@ -159,12 +193,18 @@ between vaults, share links, or MCP configuration.
 Never overwrite existing 1Password sections — if one exists, show a diff of
 what would change and ask.
 
-### Step 8: Summarize
+### Step 8: Summarize & Hand Off To Onboarding
 
 Close with a status checklist: access paths configured, app settings
-confirmed, verification results, recorded preferences, and where instructions
-were written. Suggest a first real task (for example "import this project's
-`.env`") as the smoke test.
+confirmed, verification results, recorded preferences (including the
+secret-loading mode), and where instructions were written.
+
+Then offer the frictionless first task: "Want me to make this project's
+secrets work now?" If yes, run the **Project Onboarding (Least-Friction
+Path)** workflow in `1password:environments` — import names-only, mount the
+`.env`, optionally install the agent hook — targeting ≤1 biometric approval.
+In secret-references mode, set up `op run --env-file` with `op://` references
+instead of a mount.
 
 ## If The User Declines Everything
 
