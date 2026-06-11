@@ -128,7 +128,29 @@ npx skills add smartlader-de/1password-plugin
 Target specific agents with `-a` (for example `-a claude-code -a codex`), or a
 single skill with `--skill environments`.
 
-### Codex CLI (manual)
+### Codex CLI (plugin)
+
+Codex installs plugins through marketplaces. Add this repository as a
+marketplace, then install the bundled Codex plugin:
+
+```bash
+codex plugin marketplace add smartlader-de/1password-plugin
+codex plugin add 1password-codex@smartlader
+```
+
+From a local checkout instead:
+
+```bash
+codex plugin marketplace add /path/to/1password-plugin
+codex plugin add 1password-codex@smartlader
+```
+
+Start a new Codex thread after installation so Codex can load the plugin, then
+ask:
+
+> "Set up 1Password."
+
+### Codex CLI (manual fallback)
 
 Codex loads skills from `~/.codex/skills/` (or `.codex/skills/` per project).
 Paste into your terminal:
@@ -141,10 +163,9 @@ Restart Codex; the root `SKILL.md` routes to the nested skills.
 
 ### Codex plugin surface
 
-`1password-codex/` is the compact Codex plugin surface used for Plugin Eval
-and Codex plugin metadata. It contains wrapper skills that load the canonical
-skills in this repository, so evaluate that directory instead of the repository
-root:
+`1password-codex/` is the compact Codex plugin surface. It contains wrapper
+skills that load the canonical skills in this repository, so evaluate that
+directory instead of the repository root:
 
 ```bash
 plugin-eval analyze ./1password-codex --format markdown
@@ -228,6 +249,8 @@ Metadata-first, deny-by-default:
 .claude-plugin/
 ├── plugin.json          # Claude Code plugin manifest (SemVer source of truth)
 └── marketplace.json     # Claude Code marketplace entry for git installs
+.agents/plugins/
+└── marketplace.json     # Codex marketplace entry for plugin installs
 .cursor-plugin/
 └── plugin.json          # Cursor plugin manifest
 1password-codex/
