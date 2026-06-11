@@ -254,9 +254,10 @@ tests/
 
 ## Versioning
 
-SemVer. The authoritative version is `.claude-plugin/plugin.json` and must
-match `package.json` (enforced by tests). Current version: **1.1.0** — see
-`CHANGELOG.md` and the [releases](https://github.com/smartlader-de/1password-plugin/releases).
+SemVer. The authoritative version is `package.json`; plugin manifests and
+skill frontmatter keep static copies synced by `npm run sync:version`
+(enforced by tests). Current version: **1.1.0** — see `CHANGELOG.md` and the
+[releases](https://github.com/smartlader-de/1password-plugin/releases).
 
 ## Development
 

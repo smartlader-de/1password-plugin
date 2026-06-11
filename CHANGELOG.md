@@ -2,7 +2,8 @@
 
 All notable changes to the 1password plugin are documented here.
 Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
-The plugin version lives in `.claude-plugin/plugin.json` and must match `package.json`.
+The authoritative plugin version lives in `package.json`; static manifest and
+skill frontmatter copies are synced from it.
 
 ## [1.1.0] - 2026-06-11
 

@@ -1,6 +1,6 @@
 ---
 name: cli-auth
-version: 1.0.0
+version: 1.1.0
 description: Use when securing the credentials that CLI and AI developer tools themselves authenticate with - API keys for claude, openai, aws, gh, glab, terraform and other CLIs - through 1Password Shell Plugins and biometric auth, and for AI-access security (API keys embedded in MCP config files, browser-agent credential handoff via Secure Agentic Autofill). Not for project .env variables - use 1password:environments for those.
 ---
 

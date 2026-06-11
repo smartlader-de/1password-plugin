@@ -9,7 +9,9 @@
     "./opencode": "./opencode/index.mjs"
   },
   "scripts": {
-    "test": "bash tests/entrypoints.test.sh && bash tests/skill-paths.test.sh && bash tests/plugin-manifest.test.sh && bash tests/codex-plugin-manifest.test.sh && bash tests/cursor-plugin-manifest.test.sh && bash tests/gemini-extension.test.sh && node --test tests/opencode-plugin.test.mjs && bash tests/genericity.test.sh && node --test tests/parse-dotenv.test.js tests/compare-env-names.test.js tests/check-account-binding.test.js && bash tests/redact-output.test.sh"
+    "sync:version": "node scripts/sync-version.js",
+    "check:version": "node scripts/sync-version.js --check",
+    "test": "npm run check:version && bash tests/entrypoints.test.sh && bash tests/skill-paths.test.sh && bash tests/plugin-manifest.test.sh && bash tests/codex-plugin-manifest.test.sh && bash tests/cursor-plugin-manifest.test.sh && bash tests/gemini-extension.test.sh && node --test tests/opencode-plugin.test.mjs && bash tests/genericity.test.sh && node --test tests/parse-dotenv.test.js tests/compare-env-names.test.js tests/check-account-binding.test.js && bash tests/redact-output.test.sh"
   },
   "engines": {
     "node": ">=18"
