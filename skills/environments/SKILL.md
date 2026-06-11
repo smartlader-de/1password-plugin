@@ -159,13 +159,16 @@ For pushing 1Password secrets to Netlify or Cloudflare:
 
 ## Local Runtime Workflow
 
-For local development:
+1. Default (Environments/hybrid mode): a 1Password-mounted `.env` — authorize
+   once per unlock, dotenv-compatible. Load
+   `../../references/local-env-mount.md`. Announce the single approval prompt.
+2. Scripted/CI or when no mount is wanted: `op run --environment ENV_ID --
+   your-command` — one injection, not N reads.
+3. Classic compatibility (secret-references mode): `op run --env-file .env --
+   your-command` with `op://` references.
 
-1. Prefer `op run --environment ENV_ID -- your-command` when supported.
-2. Prefer MCP-managed mounted `.env` files when dotenv compatibility is required.
-3. Use `op run --env-file .env -- your-command` with `op://` references as classic compatibility.
-
-Always ensure generated or mounted dotenv paths are in `.gitignore`. Do not update project scripts without user confirmation.
+Always ensure generated or mounted dotenv paths are in `.gitignore`. Do not
+update project scripts without user confirmation.
 
 ## Infrastructure Secret Creation Workflow
 
