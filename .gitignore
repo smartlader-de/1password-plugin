@@ -1,0 +1,8 @@
+.DS_Store
+docs/
+.remember/
+.claude/
+.1password/
+.clavix/
+PRD.md
+tests/genericity-markers.local

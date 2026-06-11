@@ -1,0 +1,14 @@
+{
+  "name": "smartlader",
+  "description": "smartlader.de plugins: agent-safe 1Password credential workflows.",
+  "owner": {
+    "name": "smartlader.de"
+  },
+  "plugins": [
+    {
+      "name": "1password",
+      "source": "./",
+      "description": "Agent-safe 1Password workflows: Environments, vault/item management, SSH and Git signing, guided setup."
+    }
+  ]
+}
