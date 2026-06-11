@@ -1,0 +1,42 @@
+{
+  "name": "1password-codex",
+  "version": "1.1.0",
+  "description": "Codex surface for secure 1Password setup, Environments, vault/items, SSH/Git, and CLI auth.",
+  "author": {
+    "name": "smartlader.de"
+  },
+  "homepage": "https://github.com/smartlader-de/1password-plugin",
+  "repository": "https://github.com/smartlader-de/1password-plugin",
+  "license": "MIT",
+  "keywords": [
+    "1password",
+    "codex",
+    "secrets",
+    "environment-variables",
+    "ssh",
+    "git-signing",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "1Password for Codex",
+    "shortDescription": "Secure 1Password workflows for Codex.",
+    "longDescription": "Compact Codex wrappers for the canonical 1Password skills.",
+    "developerName": "smartlader.de",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/smartlader-de/1password-plugin",
+    "privacyPolicyURL": "https://github.com/smartlader-de/1password-plugin",
+    "termsOfServiceURL": "https://github.com/smartlader-de/1password-plugin",
+    "defaultPrompt": [
+      "Set up 1Password.",
+      "Import .env to 1Password.",
+      "Generate an SSH key."
+    ],
+    "brandColor": "#0A5FDB",
+    "screenshots": []
+  }
+}

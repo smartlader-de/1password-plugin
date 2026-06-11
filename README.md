@@ -1,8 +1,8 @@
 # 1password — agent-safe credential workflows
 
-An OpenCode, Claude Code, and Cursor plugin (and cross-agent skill collection)
-that teaches your coding agent to work with 1Password **without ever seeing
-your secrets**.
+An OpenCode, Claude Code, Codex, and Cursor plugin (and cross-agent skill
+collection) that teaches your coding agent to work with 1Password **without
+ever seeing your secrets**.
 
 Your agent can import `.env` files into 1Password Environments, keep Netlify /
 Cloudflare / Vercel secrets in sync, run your dev server with injected
@@ -104,7 +104,7 @@ community `opencode-skills` plugin and copy this repository to
 ### Cursor (plugin)
 
 Cursor discovers this repository as a plugin through `.cursor-plugin/plugin.json`.
-The plugin bundles Cursor rules plus the same four skills in `skills/*/SKILL.md`.
+The plugin bundles Cursor rules plus the same five skills in `skills/*/SKILL.md`.
 
 Install it as a Cursor plugin from the repository or a local checkout using
 Cursor's plugin flow. After installation, ask Cursor:
@@ -138,6 +138,17 @@ git clone https://github.com/smartlader-de/1password-plugin ~/.codex/skills/1pas
 ```
 
 Restart Codex; the root `SKILL.md` routes to the nested skills.
+
+### Codex plugin surface
+
+`1password-codex/` is the compact Codex plugin surface used for Plugin Eval
+and Codex plugin metadata. It contains wrapper skills that load the canonical
+skills in this repository, so evaluate that directory instead of the repository
+root:
+
+```bash
+plugin-eval analyze ./1password-codex --format markdown
+```
 
 ### Gemini CLI (extension)
 
@@ -219,6 +230,9 @@ Metadata-first, deny-by-default:
 └── marketplace.json     # Claude Code marketplace entry for git installs
 .cursor-plugin/
 └── plugin.json          # Cursor plugin manifest
+1password-codex/
+├── .codex-plugin/plugin.json  # Codex plugin manifest
+└── skills/              # compact wrappers around canonical skills
 gemini-extension.json    # Gemini CLI extension manifest
 opencode/index.mjs       # native OpenCode plugin entrypoint
 SKILL.md                 # routing entrypoint (non-plugin runtimes)
@@ -251,7 +265,7 @@ npm test
 ```
 
 The suite validates entrypoints, skill/reference path integrity, Claude,
-Cursor, Gemini, and OpenCode plugin manifests/tool registration, dotenv
+Codex, Cursor, Gemini, and OpenCode plugin manifests/tool registration, dotenv
 parsing, metadata-only name comparison, account-binding checks, output
 redaction — and a **genericity gate** that fails if setup-specific details
 (personal paths, emails, real account IDs) ever land in shipped files. See
