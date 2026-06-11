@@ -1,7 +1,8 @@
 # 1password — agent-safe credential workflows
 
-A Claude Code plugin (and cross-agent skill collection) that teaches your
-coding agent to work with 1Password **without ever seeing your secrets**.
+An OpenCode and Claude Code plugin (and cross-agent skill collection) that
+teaches your coding agent to work with 1Password **without ever seeing your
+secrets**.
 
 Your agent can import `.env` files into 1Password Environments, keep Netlify /
 Cloudflare / Vercel secrets in sync, run your dev server with injected
@@ -62,6 +63,42 @@ Paste into Claude Code:
 ```
 
 From a local checkout instead: `/plugin marketplace add /path/to/1password-plugin`.
+
+### OpenCode (native plugin)
+
+After this package is published, add it to `opencode.json`:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["1password"]
+}
+```
+
+From a local checkout, symlink or copy the checkout into an OpenCode plugin
+directory, then list it in `opencode.json`:
+
+```bash
+mkdir -p .opencode/plugins
+ln -s /path/to/1password-plugin .opencode/plugins/1password
+```
+
+OpenCode also supports global plugins from `~/.config/opencode/plugins/`.
+Restart OpenCode after changing plugin configuration.
+
+The native plugin registers these tools:
+
+| OpenCode tool | Loads |
+|---|---|
+| `skills_1password` | Root skill router |
+| `skills_1password_setup` | `1password:setup` |
+| `skills_1password_environments` | `1password:environments` |
+| `skills_1password_vaults_items` | `1password:vaults-items` |
+| `skills_1password_ssh_git` | `1password:ssh-git` |
+
+If you prefer generic skill discovery instead of the native plugin, install the
+community `opencode-skills` plugin and copy this repository to
+`.opencode/skills/1password` or `~/.config/opencode/skills/1password`.
 
 ### Any agent CLI (Codex, Cursor, Copilot, Gemini, OpenCode, ...)
 
@@ -150,6 +187,7 @@ Metadata-first, deny-by-default:
 .claude-plugin/
 ├── plugin.json          # plugin manifest (name, version — SemVer source of truth)
 └── marketplace.json     # marketplace entry for git installs
+opencode/index.mjs       # native OpenCode plugin entrypoint
 SKILL.md                 # routing entrypoint (non-plugin runtimes)
 CLAUDE.md / AGENTS.md / GEMINI.md   # runtime entrypoint notes
 agents/openai.yaml       # OpenAI-style agent definition
@@ -176,11 +214,12 @@ match `package.json` (enforced by tests). Current version: **1.0.0** — see
 npm test
 ```
 
-The suite validates entrypoints, skill/reference path integrity, the plugin
-manifest, dotenv parsing, metadata-only name comparison, account-binding
-checks, output redaction — and a **genericity gate** that fails if
-setup-specific details (personal paths, emails, real account IDs) ever land in
-shipped files. See `CLAUDE.md` for the contributor workflow.
+The suite validates entrypoints, skill/reference path integrity, plugin
+manifests, native OpenCode tool registration, dotenv parsing, metadata-only
+name comparison, account-binding checks, output redaction — and a
+**genericity gate** that fails if setup-specific details (personal paths,
+emails, real account IDs) ever land in shipped files. See `CLAUDE.md` for the
+contributor workflow.
 
 ## License
 
