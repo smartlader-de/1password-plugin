@@ -1,7 +1,7 @@
 # 1password — agent-safe credential workflows
 
-A Claude Code plugin (and cross-agent skill collection) that teaches your
-coding agent to work with 1Password **without ever seeing your secrets**.
+A Claude Code and Cursor plugin (and cross-agent skill collection) that teaches
+your coding agent to work with 1Password **without ever seeing your secrets**.
 
 Your agent can import `.env` files into 1Password Environments, keep Netlify /
 Cloudflare / Vercel secrets in sync, run your dev server with injected
@@ -63,7 +63,22 @@ Paste into Claude Code:
 
 From a local checkout instead: `/plugin marketplace add /path/to/1password-plugin`.
 
-### Any agent CLI (Codex, Cursor, Copilot, Gemini, OpenCode, ...)
+### Cursor (plugin)
+
+Cursor discovers this repository as a plugin through `.cursor-plugin/plugin.json`.
+The plugin bundles Cursor rules plus the same four skills in `skills/*/SKILL.md`.
+
+Install it as a Cursor plugin from the repository or a local checkout using
+Cursor's plugin flow. After installation, ask Cursor:
+
+> "Set up the 1password skill"
+
+Cursor MCP setup is intentionally guided instead of bundled as an active
+`mcp.json`: 1Password MCP depends on local 1Password app settings and explicit
+approval. The setup skill will walk you through Cursor Settings → Features →
+MCP when MCP is the right path.
+
+### Any agent CLI (Codex, Copilot, Gemini, OpenCode, ...)
 
 The [`skills` CLI](https://github.com/vercel-labs/skills) detects your
 installed agents and routes the skills to each. Paste into your terminal:
@@ -148,12 +163,15 @@ Metadata-first, deny-by-default:
 
 ```text
 .claude-plugin/
-├── plugin.json          # plugin manifest (name, version — SemVer source of truth)
-└── marketplace.json     # marketplace entry for git installs
+├── plugin.json          # Claude Code plugin manifest (SemVer source of truth)
+└── marketplace.json     # Claude Code marketplace entry for git installs
+.cursor-plugin/
+└── plugin.json          # Cursor plugin manifest
 SKILL.md                 # routing entrypoint (non-plugin runtimes)
 CLAUDE.md / AGENTS.md / GEMINI.md   # runtime entrypoint notes
 agents/openai.yaml       # OpenAI-style agent definition
 CHANGELOG.md
+rules/                   # Cursor .mdc rules
 skills/
 ├── setup/SKILL.md
 ├── environments/SKILL.md
@@ -176,9 +194,9 @@ match `package.json` (enforced by tests). Current version: **1.0.0** — see
 npm test
 ```
 
-The suite validates entrypoints, skill/reference path integrity, the plugin
-manifest, dotenv parsing, metadata-only name comparison, account-binding
-checks, output redaction — and a **genericity gate** that fails if
+The suite validates entrypoints, skill/reference path integrity, Claude and
+Cursor plugin manifests, dotenv parsing, metadata-only name comparison,
+account-binding checks, output redaction — and a **genericity gate** that fails if
 setup-specific details (personal paths, emails, real account IDs) ever land in
 shipped files. See `CLAUDE.md` for the contributor workflow.
 
