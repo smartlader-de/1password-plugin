@@ -25,11 +25,22 @@ if (Object.prototype.hasOwnProperty.call(m, 'mcpServers')) throw new Error('Gemi
 if (Object.prototype.hasOwnProperty.call(m, 'settings')) throw new Error('Gemini extension must not declare sensitive settings');
 "
 
-for command in setup environments vaults-items ssh-git; do
+commands=(setup environments vaults-items ssh-git cli-auth)
+
+for command in "${commands[@]}"; do
   file="$package_root/commands/1password/$command.toml"
   [ -f "$file" ] || { echo "FAIL: commands/1password/$command.toml missing"; exit 1; }
   grep -q '^description = ' "$file" || { echo "FAIL: commands/1password/$command.toml missing description"; exit 1; }
   grep -q '^prompt = ' "$file" || { echo "FAIL: commands/1password/$command.toml missing prompt"; exit 1; }
+done
+
+for skill in "${commands[@]}"; do
+  skill_file="$package_root/skills/$skill/SKILL.md"
+  [ -f "$skill_file" ] || { echo "FAIL: skills/$skill/SKILL.md missing"; exit 1; }
+  if grep -q '^version:' "$skill_file"; then
+    echo "FAIL: skills/$skill/SKILL.md frontmatter must not include version"
+    exit 1
+  fi
 done
 
 echo "PASS: Gemini extension valid"

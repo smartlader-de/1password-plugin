@@ -1,6 +1,5 @@
 ---
 name: setup
-version: 1.1.0
 description: Use when installing, configuring, or onboarding the 1password skill collection - choosing between CLI and MCP access, enabling the right 1Password app settings, verifying access, and wiring instructions into CLAUDE.md
 ---
 

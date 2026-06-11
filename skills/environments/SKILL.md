@@ -1,6 +1,5 @@
 ---
 name: environments
-version: 1.1.0
 description: Use when managing project environment variables, provider secrets, or local runtime secrets through 1Password Environments, 1Password MCP, or guarded op CLI workflows - including moving or copying Environments and variables between Environments and accounts
 ---
 

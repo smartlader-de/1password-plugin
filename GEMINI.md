@@ -2,11 +2,12 @@
 
 Five skills for securely managing credentials through 1Password.
 
-This Gemini CLI extension bundles Agent Skills in `skills/*/SKILL.md`. For
-1Password tasks, activate or load the matching bundled skill and follow its
-workflow before taking action.
+This Gemini CLI extension bundles slash commands in `commands/1password/` and
+Agent Skills in `skills/*/SKILL.md`. For 1Password tasks, use the matching
+command or load the matching bundled skill and follow its workflow before
+taking action.
 
-Available skills:
+Available commands and skills:
 - `1password:setup` — guided first-time setup, CLI/MCP choice, app settings, access checks, CLAUDE.md wiring
 - `1password:environments` — secrets, environment variables, provider sync, Environment transfers
 - `1password:vaults-items` — item CRUD, cross-vault/account moves, sharing, vault permissions
@@ -16,4 +17,5 @@ Available skills:
 For any other 1Password developer topic, load `references/docs-map.md` and
 fetch current docs from www.1password.dev.
 
-See CLAUDE.md for full trigger details.
+If the task spans multiple workflows, start with root `SKILL.md`; it routes to
+the nested skill that should be followed.
