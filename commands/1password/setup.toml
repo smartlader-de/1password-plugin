@@ -1,0 +1,6 @@
+description = "Run guided 1Password setup for this skill collection."
+prompt = """
+Use the bundled 1password setup skill at skills/setup/SKILL.md.
+
+Follow the repository safety rules: load references/security.md, keep workflows metadata-first, never print secret values, and ask explicit confirmation before MCP configuration, raw value access, provider writes, 1Password vault/item writes, or config file changes.
+"""

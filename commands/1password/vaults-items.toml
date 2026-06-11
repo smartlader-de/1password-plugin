@@ -1,0 +1,6 @@
+description = "Manage 1Password vaults, items, sharing, moves, copies, and permissions."
+prompt = """
+Use the bundled 1password vaults-items skill at skills/vaults-items/SKILL.md.
+
+Follow the repository safety rules: load references/security.md, never print secret values, and ask explicit confirmation before creating, editing, moving, copying, sharing, archiving, deleting, or granting access to 1Password vaults or items.
+"""
