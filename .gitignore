@@ -6,3 +6,4 @@ docs/
 .clavix/
 PRD.md
 tests/genericity-markers.local
+.worktrees/
