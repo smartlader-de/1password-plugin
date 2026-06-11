@@ -83,3 +83,21 @@ Recommended Environment names:
 - `projectname/preview`
 
 Use exact variable-name matching in MVP. Provider-specific renames are deferred.
+
+## Infrastructure Secret Creation
+
+When generating new secrets during infrastructure setup (database passwords,
+API tokens, auth secrets, service join tokens):
+
+1. Create or identify the target Environment via MCP.
+2. Generate each value with a local tool (`openssl rand`, etc.) and pipe
+   directly to MCP `append_variables` with `concealed: true` — never print the
+   value.
+3. Use `op run --environment ENV_ID -- <command>` to inject values into the
+   target system (Docker service, cloud provider, etc.).
+4. Never create the secret in the target system first and copy to 1Password
+   second. If that already happened: generate a new value in 1Password, update
+   the target, discard the original.
+
+See `mcp-quickstart.md` for the `append_variables` call pattern and MCP auth
+flow.

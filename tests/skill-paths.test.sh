@@ -14,7 +14,7 @@ package_root=$(cd "$script_dir/.." && pwd)
 [ -f "$package_root/skills/setup/SKILL.md" ] || { echo "FAIL: skills/setup/SKILL.md missing"; exit 1; }
 [ -f "$package_root/references/vercel.md" ] || { echo "FAIL: references/vercel.md missing"; exit 1; }
 
-for ref in docs-map items-vaults secret-references service-accounts-connect sdks environments-transfer shell-plugins local-env-mount; do
+for ref in docs-map items-vaults secret-references service-accounts-connect sdks environments-transfer shell-plugins local-env-mount provider-sync; do
   [ -f "$package_root/references/$ref.md" ] || { echo "FAIL: references/$ref.md missing"; exit 1; }
 done
 
