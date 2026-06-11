@@ -191,12 +191,18 @@ between vaults, share links, or MCP configuration.
 Never overwrite existing 1Password sections — if one exists, show a diff of
 what would change and ask.
 
-### Step 8: Summarize
+### Step 8: Summarize & Hand Off To Onboarding
 
 Close with a status checklist: access paths configured, app settings
-confirmed, verification results, recorded preferences, and where instructions
-were written. Suggest a first real task (for example "import this project's
-`.env`") as the smoke test.
+confirmed, verification results, recorded preferences (including the
+secret-loading mode), and where instructions were written.
+
+Then offer the frictionless first task: "Want me to make this project's
+secrets work now?" If yes, run the **Project Onboarding (Least-Friction
+Path)** workflow in `1password:environments` — import names-only, mount the
+`.env`, optionally install the agent hook — targeting ≤1 biometric approval.
+In secret-references mode, set up `op run --env-file` with `op://` references
+instead of a mount.
 
 ## If The User Declines Everything
 

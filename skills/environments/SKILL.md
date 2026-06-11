@@ -1,6 +1,6 @@
 ---
 name: environments
-version: 1.0.0
+version: 1.1.0
 description: Use when managing project environment variables, provider secrets, or local runtime secrets through 1Password Environments, 1Password MCP, or guarded op CLI workflows - including moving or copying Environments and variables between Environments and accounts
 ---
 
@@ -41,6 +41,37 @@ Follow this order every time:
 9. Execute the chosen workflow.
 10. Verify by names, contexts, and status only.
 11. Summarize without secrets.
+
+## Project Onboarding (Least-Friction Path)
+
+Use this when the user says "make this project's secrets work." Goal: a working
+dev server with **≤1 biometric approval and ≤3 confirmations** (import plan,
+mount path, hook install). Only for Environments or hybrid mode; in
+secret-references mode, skip mounting and use `op run --env-file` with `op://`
+references instead.
+
+1. **Import names-only.** Detect `.env*` files, run the Import Workflow to
+   create an Environment named `project/context`. Confirmation #1: the import
+   plan (names only).
+2. **Mount the `.env`.** Configure a locally mounted FIFO `.env` as the
+   local-dev destination — one authorization, readable until 1Password locks,
+   nothing plaintext on disk. Load `../../references/local-env-mount.md` for
+   the mount flow and the documented gotchas (git-tracked `.env` deleted and
+   committed first; max 10 mounts; no concurrent readers; Mac/Linux only — on
+   Windows fall back to secret-references mode). Confirmation #2: the mount
+   path. This is the single biometric approval.
+3. **Offer the agent hook.** Optionally install the official 1Password agent
+   hook and author `.1password/environments.toml` with the project's
+   `mount_paths` so the agent is blocked from running commands before mounts
+   are live (fail-open: if 1Password is down, commands proceed). Needs
+   `sqlite3` + Mac/Linux. Confirmation #3: hook install. Details in
+   `../../references/local-env-mount.md`.
+4. **Hygiene + verify.** Ensure `.env` and `.1password/` are gitignored
+   (`git check-ignore`), then verify by variable *names* only — never print
+   values. Summarize names imported, mount path, and hook status.
+
+Announce expected prompts before each step (prompt economy — see
+`../../references/security.md`).
 
 ## MCP Detection
 
