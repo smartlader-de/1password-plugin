@@ -56,7 +56,7 @@ Ask the user: CLI, MCP, or both. Lay out the trade-offs honestly:
 |---|---|---|
 | Secret exposure | Values never reach the agent — metadata tools plus desktop approval prompts | Values *can* reach the agent; safety depends on the guarded workflows in these skills |
 | Coverage | Environments only: create, list names, mounted `.env` files | Full surface: items, vaults, documents, users, SSH, service accounts, Connect |
-| Maturity | Beta (1Password Labs), Mac and Linux only | Stable, all platforms; Environments commands need the beta CLI build |
+| Maturity | Beta, Mac and Linux only | Stable, all platforms; Environments commands need the beta CLI build |
 | Requirements | Desktop app running and unlocked; per-client registration | Desktop app integration for biometric auth, or service account token for headless |
 | Best for | Agent-managed environment variables | Vault items, moves between vaults, SSH/Git, automation |
 
@@ -108,11 +108,19 @@ Walk the user through the desktop app (they click, you verify):
 2. **CLI integration** (biometric unlock for `op`):
    Settings → Developer → **Integrate with 1Password CLI**.
 3. **MCP server** (only if MCP was chosen):
-   Settings → Labs → **Enable local MCP server**, then
-   Settings → Developer → **Integrate with MCP clients**.
+   Settings → Developer → **Integrate with MCP clients**. If the app version
+   still shows a separate Labs page for MCP, first enable
+   Settings → Labs → MCP Server → **Enable local MCP server**.
    Business accounts: an admin may need to allow this under
    Policies → Agentic permissions → Local MCP server.
-4. **SSH agent** (optional, only if the user wants `1password:ssh-git`):
+   If a client authorization is stale, use
+   Settings → Developer → MCP Server → **Clear MCP Authorizations** before
+   retrying the connection.
+4. **Developer Watchtower** (recommended during setup):
+   Settings → Developer → Watchtower →
+   **Check for developer credentials on disk**. It currently checks developer
+   credentials such as local SSH keys and is useful after setup or import work.
+5. **SSH agent** (optional, only if the user wants `1password:ssh-git`):
    Settings → Developer → **Use the SSH agent**.
 
 These are beta-era menu paths; if a setting is missing, load
@@ -124,6 +132,12 @@ If the CLI path was chosen:
 
 1. Install if missing — macOS: `brew install 1password-cli`; other platforms:
    point at https://www.1password.dev/cli/get-started.
+   If the user needs the beta CLI for Environments support on macOS, use
+   `brew install --cask 1password-cli@beta`. Do **not** qualify the beta cask
+   with the `1password/tap` prefix; the beta cask lives in Homebrew's main cask
+   repository (`homebrew/cask`), not the 1Password tap.
+   The beta cask conflicts with the stable CLI cask, so the user may need
+   `brew uninstall --cask 1password-cli` before installing the beta.
 2. `op --version`, then `op whoami`. First run triggers the desktop approval
    prompt — tell the user to expect it.
 3. Verify metadata-only: `op vault list`. Never demonstrate access by reading

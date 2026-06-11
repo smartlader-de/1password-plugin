@@ -68,10 +68,11 @@ Always use `concealed: true` for secret values in `append_variables`.
 
 ## 4. Desktop Approval UX
 
-The MCP server is a 1Password Labs experiment.
-
 Prerequisites:
-- Enable in 1Password app: Settings → 1Password Labs → "Enable local MCP server"
+- Enable MCP client integration in 1Password app:
+  Settings → Developer → MCP Server → "Integrate with MCP clients"
+- If the app version still exposes a separate Labs toggle, enable:
+  Settings → Labs → MCP Server → "Enable local MCP server"
 - Feature flag: `ai-local-mcp-server`
 
 Approval prompts appear:
@@ -80,6 +81,10 @@ Approval prompts appear:
 
 **If MCP calls hang without returning:** a desktop approval is waiting. Check
 the 1Password app. Do not retry the call — wait for the user to approve.
+
+If approval state appears stale, clear it in
+Settings → Developer → MCP Server → "Clear MCP Authorizations", then reconnect
+the client.
 
 **If authentication succeeds but Environment authorization fails:** check for
 account mismatch before retrying. Repeated `authenticate` or `append_variables`
