@@ -6,15 +6,18 @@ package_root=$(cd "$script_dir/.." && pwd)
 
 plugin_root="$package_root/1password-codex"
 manifest="$plugin_root/.codex-plugin/plugin.json"
+marketplace="$package_root/.agents/plugins/marketplace.json"
 
 [ -f "$manifest" ] || { echo "FAIL: 1password-codex/.codex-plugin/plugin.json missing"; exit 1; }
 [ -d "$plugin_root/skills" ] || { echo "FAIL: 1password-codex/skills missing"; exit 1; }
+[ -f "$marketplace" ] || { echo "FAIL: .agents/plugins/marketplace.json missing"; exit 1; }
 
 node -e "
 const fs = require('fs');
 const path = require('path');
 const manifest = JSON.parse(fs.readFileSync('$manifest', 'utf8'));
 const pkg = JSON.parse(fs.readFileSync(path.join('$package_root', 'package.json'), 'utf8'));
+const marketplace = JSON.parse(fs.readFileSync('$marketplace', 'utf8'));
 if (manifest.name !== '1password-codex') throw new Error('Codex plugin name must be 1password-codex');
 if (path.basename('$plugin_root') !== manifest.name) throw new Error('Codex plugin directory must match manifest name');
 if (manifest.version !== pkg.version) throw new Error('Codex plugin version must match package.json');
@@ -28,6 +31,13 @@ if (!Array.isArray(manifest.interface.defaultPrompt) || manifest.interface.defau
 for (const prompt of manifest.interface.defaultPrompt) {
   if (prompt.length > 128) throw new Error('Codex default prompt too long: ' + prompt);
 }
+if (marketplace.name !== 'smartlader') throw new Error('Codex marketplace name must be smartlader');
+const entry = marketplace.plugins && marketplace.plugins.find(p => p.name === '1password-codex');
+if (!entry) throw new Error('Codex marketplace must list the 1password-codex plugin');
+if (!entry.source || entry.source.path !== './1password-codex') throw new Error('Codex marketplace source.path must be ./1password-codex');
+if (!entry.policy || entry.policy.installation !== 'AVAILABLE') throw new Error('Codex marketplace policy.installation must be AVAILABLE');
+if (!entry.policy || entry.policy.authentication !== 'ON_INSTALL') throw new Error('Codex marketplace policy.authentication must be ON_INSTALL');
+if (entry.category !== 'Developer Tools') throw new Error('Codex marketplace category must be Developer Tools');
 "
 
 for skill in setup environments vaults-items ssh-git cli-auth; do

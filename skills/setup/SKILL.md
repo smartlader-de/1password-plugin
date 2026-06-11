@@ -134,8 +134,7 @@ If the CLI path was chosen:
    point at https://www.1password.dev/cli/get-started.
    If the user needs the beta CLI for Environments support on macOS, use
    `brew install --cask 1password-cli@beta`. Do **not** qualify the beta cask
-   with the `1password/tap` prefix; the beta cask lives in Homebrew's main cask
-   repository (`homebrew/cask`), not the 1Password tap.
+   with a tap prefix; the beta cask lives in Homebrew's main cask repository.
    The beta cask conflicts with the stable CLI cask, so the user may need
    `brew uninstall --cask 1password-cli` before installing the beta.
 2. `op --version`, then `op whoami`. First run triggers the desktop approval

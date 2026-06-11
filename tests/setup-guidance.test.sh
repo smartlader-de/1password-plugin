@@ -7,7 +7,10 @@ cd "$package_root"
 
 shipped_files=$(git ls-files | grep -E '\.(md|toml|json|yaml|mjs|sh)$' || true)
 
-if echo "$shipped_files" | xargs grep -n -- 'brew install --cask 1password/tap/1password-cli@beta' >/dev/null 2>&1; then
+bad_beta_cask='brew install --cask 1password/tap/'
+bad_beta_cask+='1password-cli@beta'
+
+if echo "$shipped_files" | xargs grep -n -- "$bad_beta_cask" >/dev/null 2>&1; then
   echo "FAIL: bad Homebrew-qualified 1Password beta CLI cask guidance found"
   exit 1
 fi

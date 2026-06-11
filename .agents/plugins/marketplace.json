@@ -1,0 +1,20 @@
+{
+  "name": "smartlader",
+  "interface": {
+    "displayName": "smartlader.de"
+  },
+  "plugins": [
+    {
+      "name": "1password-codex",
+      "source": {
+        "source": "local",
+        "path": "./1password-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
