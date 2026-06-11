@@ -53,3 +53,10 @@ SDK code written for a user must follow the same rules as CLI workflows: token
 from the runtime environment (never literal in code), no printing of resolved
 secrets, resolve directly into the consuming call. When generating example
 code, use placeholder references (`op://vault/item/field`), never real values.
+
+## Building On 1Password With LLMs
+
+For best practices on building LLM-powered integrations on top of 1Password,
+see `https://www.1password.dev/building-with-llms.md`. For the broader AI
+credential surface (CLI keys, MCP configs, browser-agent autofill), see
+`ai-access.md`.

@@ -20,7 +20,7 @@ Internal planning lives in gitignored files (`PRD.md`, `.clavix/`, `docs/`,
 
 ## 1Password Skills
 
-This collection provides four skills for securely managing credentials through 1Password.
+This collection provides five skills for securely managing credentials through 1Password.
 
 ### 1password:setup
 Use when handling:
@@ -80,8 +80,21 @@ Trigger phrase examples:
 - "sign my commits with 1Password"
 - "connect to this server using 1Password SSH"
 
+### 1password:cli-auth
+Use when handling:
+- Securing API keys for CLI/AI tools themselves (claude, openai, aws, gh) via Shell Plugins
+- Replacing plaintext keys in shell profiles or MCP config files
+- Biometric auth for developer CLIs
+- Browser-agent credential handoff (Secure Agentic Autofill)
+
+Trigger phrase examples:
+- "stop storing my OpenAI key in plaintext"
+- "biometric auth for my gh CLI"
+- "my MCP config has an API key in it"
+- "secure my ANTHROPIC_API_KEY"
+
 ### Anything else 1Password
 For 1Password topics beyond these workflows (SDKs, service accounts, Connect,
-CI/CD integrations, Events API, shell plugins, agent security), load
+CI/CD integrations, Events API, agent security), load
 `references/docs-map.md` and fetch current docs from www.1password.dev before
 answering.

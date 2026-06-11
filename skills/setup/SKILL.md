@@ -68,9 +68,11 @@ guarded fallback gates.
 
 Separate offer while the CLI is being set up: if the user keeps API keys for
 CLI tools (`claude`, `openai`, `aws`, `gh`) in shell profiles or plaintext
-configs, 1Password Shell Plugins can replace those with biometric auth — load
-`../../references/shell-plugins.md`. This is about the tools' own
-credentials, independent of the project-secrets choice above.
+configs, those belong in `1password:cli-auth` (Shell Plugins, biometric auth)
+— a different concern from the project-secrets choice above. If the user also
+works with AI tools, `1password:cli-auth` covers the wider Secure AI Access
+surface too: keys embedded in MCP config files and browser-agent credential
+handoff (Secure Agentic Autofill).
 
 ### Step 2.5: Choose Secret-Loading Mode
 

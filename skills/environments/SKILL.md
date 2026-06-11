@@ -201,9 +201,8 @@ Never read values without explicit approval. Pipe displayed command output throu
   `../../references/service-accounts-connect.md`.
 - `op://` secret reference syntax and `op read`/`op inject` patterns:
   `../../references/secret-references.md`.
-- API keys for third-party CLI tools themselves (`claude`, `openai`, `aws`,
-  `gh`, ...) are not project env vars — use Shell Plugins:
-  `../../references/shell-plugins.md`.
+- API keys for third-party CLI/AI tools themselves (`claude`, `openai`, `aws`,
+  `gh`, ...) are not project env vars — use `1password:cli-auth`.
 - Any other 1Password developer topic: `../../references/docs-map.md` — fetch
   current docs from www.1password.dev before answering.
 
