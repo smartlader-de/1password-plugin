@@ -1,7 +1,6 @@
 ---
 name: ssh-git
 description: Use when generating SSH keys stored in 1Password, registering keys with GitHub or GitLab, configuring Git commit signing via 1Password, or setting up SSH server access through the 1Password SSH agent
-version: 1.1.0
 ---
 
 # 1password:ssh-git

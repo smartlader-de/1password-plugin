@@ -165,6 +165,10 @@ For local development from a checkout:
 gemini extensions link .
 ```
 
+After install or link, restart Gemini CLI, run `/extensions list`, and smoke
+test `/1password:cli-auth` plus a natural-language prompt such as "secure my
+OpenAI CLI API key with 1Password Shell Plugins".
+
 Manual fallback: Gemini also loads skills from `~/.gemini/skills/` (or
 `.gemini/skills/` per project). If you cannot use extensions, clone the skill
 collection directly:
