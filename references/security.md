@@ -28,6 +28,47 @@ Always ask the user for explicit confirmation before:
 - Creating or deleting vaults, and granting or revoking vault permissions.
 - Creating service accounts or Connect tokens.
 
+## Least Privilege & Prompt Economy
+
+Governing principle: NIST least privilege — request exactly the access the
+operation needs, exactly when it needs it, and no more. Apply these as hard
+rules in every workflow.
+
+**Scope to the operation.**
+
+- Reads use read scopes; only writes use read+write. Never request
+  `manage_vault`, broader vault access, or broader service-account scopes when
+  a narrower permission suffices.
+- When a grant fails, add the specific missing permission — never widen to a
+  broader role to make the error go away.
+- Service accounts: scope to exactly the vaults/Environments needed, the
+  shortest sensible expiry, one per pipeline.
+- SSH: scope offered keys via `agent.toml` instead of exposing every eligible
+  key (also avoids the OpenSSH six-key limit — see `ssh-agent.md`).
+
+**Verify every write.**
+
+- After any write (provider sync, `append_variables`, item create/move,
+  binding update), confirm success with a names/status-only check before
+  reporting success. Never report a write as done without this step.
+
+**Batch to minimize authorization prompts.**
+
+- One `op run --environment ENV_ID -- cmd` injection instead of N `op read`
+  calls.
+- One `op item get --fields a,b,c` instead of three separate gets.
+- For local-dev loops, prefer a mounted `.env` (authorize once per unlock)
+  over repeated CLI reads.
+
+**Announce the prompt before it happens.**
+
+- Before an action that triggers biometric/desktop approval, tell the user
+  exactly which prompt to expect and why — e.g. "you'll get one TouchID prompt
+  to mount the file; nothing else this session." Authorization windows
+  (mounted-file reads, SSH agent, CLI biometric sessions on Unix) last until
+  1Password locks; exploit that window deliberately instead of re-triggering
+  it.
+
 ## Safe Command Patterns
 
 These patterns avoid value exposure:
