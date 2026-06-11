@@ -50,7 +50,13 @@ Ask for explicit approval before enabling, installing, or configuring MCP.
 Current setup assumptions from 1Password documentation:
 
 - The 1Password desktop app must be installed and running.
-- The user may need to enable the local MCP server in 1Password settings under Labs / MCP Server.
+- Current 1Password app builds expose MCP client integration under
+  Settings > Developer > MCP Server > Integrate with MCP clients.
+- Some beta-era builds and official docs may still show a separate
+  Settings > Labs > MCP Server > Enable local MCP server toggle; use that only
+  when it is visible in the user's app.
+- If a client authorization is stale, use
+  Settings > Developer > MCP Server > Clear MCP Authorizations before retrying.
 - Codex must be configured with a local MCP server command.
 - Enterprise admins can control MCP access through agentic or local MCP server policies.
 - The feature is beta, so settings names and paths may change.
