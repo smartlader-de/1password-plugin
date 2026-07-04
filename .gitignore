@@ -6,3 +6,7 @@ docs/
 .clavix/
 PRD.md
 tests/genericity-markers.local
+.worktrees/
+.agents/skills/gemini-plugin-creator/
+skills-lock.json
+skills/gemini-plugin-creator

@@ -1,6 +1,6 @@
 {
   "name": "1password-codex",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Codex surface for secure 1Password setup, Environments, vault/items, SSH/Git, and CLI auth.",
   "author": {
     "name": "smartlader.de"
