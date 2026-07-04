@@ -113,6 +113,15 @@ Always feature-detect CLI support. Do not assume the installed `op` version supp
 
 Load `../../references/one-password-environments.md` for storage model and CLI guidance.
 
+## Breadcrumbs
+
+Follow the breadcrumb protocol in the root `SKILL.md`: before discovery, read
+`.1password/breadcrumbs.json` and, if the target Environment is recorded, go
+straight to it by `environmentId` (list/mount) instead of listing all
+Environments. After creating or first locating an Environment, write its
+breadcrumb (`kind: env`, account, `environmentId` — never values). This lives
+alongside `.1password/environments.json`; keep `.1password/` gitignored.
+
 ## Import Workflow
 
 For importing project `.env` files into 1Password:

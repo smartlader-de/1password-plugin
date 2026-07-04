@@ -59,6 +59,22 @@ rules in every workflow.
 - One `op item get --fields a,b,c` instead of three separate gets.
 - For local-dev loops, prefer a mounted `.env` (authorize once per unlock)
   over repeated CLI reads.
+- **One process = one prompt.** An agent's shell usually does not persist
+  session state between separate command invocations, so N `op` invocations
+  means N sign-ins means N biometric prompts. When a task needs several `op`
+  commands, run them inside a single shell invocation (one script) so the whole
+  task costs one prompt.
+
+**Leave breadcrumbs; do not re-explore.**
+
+- The dominant cause of prompt fatigue is re-discovery — listing every vault and
+  item (or Environment) to find one secret each session. After locating or
+  creating a credential, record its location in project-local
+  `.1password/breadcrumbs.json` (`kind`, account, and `vault`+`itemId` or
+  `environmentId` — never the value). Next time, read the breadcrumb and go
+  straight to that one item/Environment. Keep `.1password/` gitignored.
+- When no breadcrumb exists and MCP is available, locate via MCP metadata (one
+  unlock, no values) before any raw CLI read.
 
 **Announce the prompt before it happens.**
 

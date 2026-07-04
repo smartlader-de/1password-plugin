@@ -35,12 +35,28 @@ Follow this order every time:
 3. Verify CLI auth: `op whoami`. If multiple accounts exist, confirm the target
    account with the user and pass `--account` explicitly on every command.
 4. Load `../../references/items-vaults.md` for command syntax and caveats.
-5. Run metadata-only discovery first: `op vault list`, `op item list --vault X --format json | jq '.[] | {id, title, category}'`.
+5. **Locate via breadcrumb, not by scanning** (see the breadcrumb protocol in
+   the root `SKILL.md`). Read `.1password/breadcrumbs.json`:
+   - Breadcrumb found → go straight to that item, metadata only: `op item get
+     <itemId> --format json | jq '{title,id,fields:[.fields[].label]}'`. Do
+     **not** run `op vault list` or list other items. Read a field *value* only
+     when the task requires it, gated and piped per `../../references/security.md`
+     (never `--fields`/`--reveal` to the terminal).
+   - No breadcrumb, MCP available → locate the vault/item via MCP metadata
+     first, then one targeted `op item get` (the sanctioned CLI+MCP hop).
+   - No breadcrumb, no MCP → one scoped `op item list --vault X --format json |
+     jq '.[] | {id, title, category}'`. Only `op vault list` if the vault
+     itself is unknown.
+   For a **new** credential, confirm the destination vault first (offer vault
+   names metadata-only; ask before creating a vault) — never guess.
 6. Present a plan naming the items, source, and destination. Ask for explicit
    confirmation before any write, move, delete, share, or permission change.
-7. Execute.
-8. Verify by listing metadata only.
-9. Summarize without field values.
+7. Execute — batch multiple reads into one invocation to keep the task to one
+   biometric prompt (root `SKILL.md` prompt economy).
+8. **Write the breadcrumb** for any credential located or created (account,
+   vault, itemId — never the value) to `.1password/breadcrumbs.json`.
+9. Verify by listing metadata only.
+10. Summarize without field values.
 
 ## Moving Items Between Vaults
 
