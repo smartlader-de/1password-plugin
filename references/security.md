@@ -59,11 +59,11 @@ rules in every workflow.
 - One `op item get --fields a,b,c` instead of three separate gets.
 - For local-dev loops, prefer a mounted `.env` (authorize once per unlock)
   over repeated CLI reads.
-- **One process = one prompt.** An agent's shell usually does not persist
-  session state between separate command invocations, so N `op` invocations
-  means N sign-ins means N biometric prompts. When a task needs several `op`
-  commands, run them inside a single shell invocation (one script) so the whole
-  task costs one prompt.
+- Authorization is **per account** and persists across separate agent tool
+  calls until 10 min of `op` inactivity, 12 h, or app lock. Probe with
+  `op whoami --account …` (never prompts) and announce a prompt only when it
+  reports `not signed in`. Never infer lock state from hook warnings — see root
+  `SKILL.md` § "Is 1Password locked?".
 
 **Leave breadcrumbs; do not re-explore.**
 

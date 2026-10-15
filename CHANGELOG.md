@@ -5,6 +5,23 @@ Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](ht
 The authoritative plugin version lives in `package.json`; static manifest and
 skill frontmatter copies are synced from it.
 
+## [Unreleased]
+
+### Fixed
+- Agents no longer report "1Password is locked" from the official agent hook's
+  "database could not be read" warning, a false positive on macOS 27. Lock
+  state is checked only with `op whoami --account …`, which never prompts.
+- Corrected the session model: CLI authorization is per account and persists
+  across separate agent tool calls (10 min idle / 12 h / app lock). Removed the
+  wrong "one process = one prompt" rule.
+- `1password:setup`: `op whoami` does not trigger the approval prompt; the
+  first metadata call does.
+
+### Added
+- Error table mapping each `op` failure to its cause and fix.
+- `1password:setup`: macOS 27 "Data shared by 1Password" privacy grant and
+  keep-the-app-reachable steps.
+
 ## [1.1.0] - 2026-06-11
 
 Frictionless, least-privilege secrets — plus two modularity moves.
