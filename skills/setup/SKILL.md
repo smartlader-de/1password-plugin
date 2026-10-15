@@ -122,6 +122,14 @@ Walk the user through the desktop app (they click, you verify):
    credentials such as local SSH keys and is useful after setup or import work.
 5. **SSH agent** (optional, only if the user wants `1password:ssh-git`):
    Settings → Developer → **Use the SSH agent**.
+6. **macOS 27+ privacy grant** (else `op` reports "No accounts configured"):
+   System Settings → Privacy & Security → Files & Folders → the agent app and
+   every terminal/IDE that runs `op` → **Data shared by 1Password** on, then
+   restart that app. Missing toggle → run any `op` command and click Allow.
+   This does not silence the official agent hook's false "locked" warning;
+   that one is ignored (root `SKILL.md`).
+7. **Keep the integration reachable:** keep 1Password in the menu bar / tray
+   and allow it to run in the background.
 
 These are beta-era menu paths; if a setting is missing, load
 `../../references/docs-map.md` and fetch the current docs instead of guessing.
@@ -137,9 +145,10 @@ If the CLI path was chosen:
    with a tap prefix; the beta cask lives in Homebrew's main cask repository.
    The beta cask conflicts with the stable CLI cask, so the user may need
    `brew uninstall --cask 1password-cli` before installing the beta.
-2. `op --version`, then `op whoami`. First run triggers the desktop approval
-   prompt — tell the user to expect it.
-3. Verify metadata-only: `op vault list`. Never demonstrate access by reading
+2. `op --version`, `op account list` (no auth), then
+   `op whoami --account <account>` — never prompts; `not signed in` is normal.
+3. Verify metadata-only: `op vault list --account <account> --format json | jq length`.
+   This is the first call that triggers the approval prompt — announce it. Never demonstrate access by reading
    a value.
 4. If the user wants Environments via CLI, feature-detect
    (`op environment read --help`) and mention the beta build channel if

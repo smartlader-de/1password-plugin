@@ -91,17 +91,57 @@ Need to reach a known credential?
 
 Keep `.1password/` gitignored (the environments lane already ensures this).
 
+## Is 1Password locked? — only `op` may answer
+
+**Never tell the user "1Password is locked" from a secondhand signal.**
+1Password's own agent hook (`validate-mounted-env-files.sh`, shipped with the
+official Claude Code plugin) injects "The 1Password database could not be read,
+which usually means 1Password is locked or not running. Warn the user…" on
+every Bash call whenever it cannot open the desktop app's SQLite file. On macOS
+27 that file is privacy-protected (TCC), so the hook fires while the app is
+unlocked and `op` works. The "Data shared by 1Password" grant does not silence
+it. The hook fails open and only matters in projects with locally mounted
+`.env` files: ignore it for lock state and don't relay it.
+
+The only valid probe — instant, never prompts:
+
+```bash
+op whoami --account <account>
+```
+
+| `op` output | Meaning | Do |
+|---|---|---|
+| URL / Email / User ID | authorized for this account | proceed, no prompt will fire |
+| `account is not signed in` | **normal**, not locked: not authorized yet, idle > 10 min, or app locked since | announce one prompt, run the real command; it prompts / unlocks |
+| `No accounts configured for use with 1Password CLI` | macOS 27+ privacy block, or CLI integration off | user: System Settings → Privacy & Security → Files & Folders → the agent app / terminal → **Data shared by 1Password** on, restart it. Else 1Password → Settings → Developer → **Integrate with 1Password CLI**. |
+| `authorization prompt dismissed` | nobody at the machine, biometrics unavailable (e.g. clamshell), or password re-unlock due | stop and ask; never retry in a loop |
+| `timed out` / `connection reset` / `lost connection` | app integration unreachable | user: keep 1Password in the menu bar / tray, allow it in background, restart the app |
+| `op read` returns empty | prompt unanswered or denied | an empty-value guard (`[ -n "$V" ] \|\| exit 1`) stops the script; ask the user |
+
+Don't probe `op` binaries, config, or the 1Password data directory to debug
+this — agent safety classifiers rightly treat it as credential exploration.
+
 ## Prompt economy — hold a task to one biometric prompt
 
-- **Batch reads:** one `op item get --fields a,b,c`, or one `op run --environment`
-  — never N separate `op read` calls.
-- **One process = one prompt.** The agent's shell does not persist state between
-  separate command invocations, so N tool-calls means N sign-ins means N prompts.
-  When a CLI task genuinely needs several `op` commands, run them inside a
-  **single shell invocation** (one script) so the whole task costs one prompt.
+Authorization model (www.1password.dev/cli/app-integration-security; observed
+in Claude Code with `op` 2.41 on macOS, no TTY):
+- **Per account.** Authorizing one account does nothing for another; always
+  pass `--account`. A second account means a second prompt.
+- **Persists across separate agent tool calls.** A second authenticated call in
+  a new shell invocation ran in ~1 s without a prompt — no need to cram every
+  `op` call into one script to save prompts.
+- **Expires** after 10 min without `op` use (each call resets the timer), hard
+  limit 12 h, and immediately when the app locks.
+
+Rules:
+- **Batch reads:** one `op item get --fields a,b,c`, one `op run`, or one
+  `op inject` — not N `op read` calls (fewer round trips, fewer leak surfaces).
 - **Env vars:** mount the `.env` once (authorize once per unlock), then read the
   file — zero further prompts. See `skills/environments/SKILL.md`.
-- Announce the single prompt before it fires.
+- Before a task's first authenticated call, run the `op whoami` probe; announce
+  the prompt only when it reports `not signed in`.
+- Unattended / scheduled runs have no human to approve: use a scoped service
+  account (`OP_SERVICE_ACCOUNT_TOKEN`, see `references/service-accounts-connect.md`).
 
 ## Anything else
 
